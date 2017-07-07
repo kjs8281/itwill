@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:p="http://www.springframework.org/schema/p"
+xsi:schemaLocation="http://www.springframework.org/schema/beans 
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- Dispatcher 서블릿클래스가 클라이언트의 요청을 미리 받고...
+	       아래의 컨트롤러 클래스들 중...하나가 자동으로 맵핑되어 아래 컨트롤러 클래스가 실행되게 선언함 -->
+	
+	<!-- 요청정보를 전달받아.. 응답결과를 생성하는 Controller클래스선언 -->
+	<!-- 인터넷주소창에 hello.do라는 요청이 들어오면...HelloController클래스를 실행되게 선언-->
+	<bean id="hello" name="/hello.do" class="controller.HelloController"></bean>
+	
+	<!--  index.do라는 요청이 들어오면...ShoppingController클래스를 실행되게 선언 -->
+	<bean id="index" name="/index.do" class="controller.ShoppingController"></bean>
+	
+	<!--  Top.jsp에서 수작업 공구 메뉴를 클릭하여 sujak.do 라는 요청이 들어오면...ShoppingController클래스를 실행되게 선언 -->
+	<bean id="sujak" name="/sujak.do"  class="controller.ShoppingController"
+		  p:shoppingDao-ref="shoppingDao"></bean>
+	<!-- 
+	   바로위코드 설명
+		p:shoppingDao-ref="shoppingDao" 의 뜻!
+		아래소스중 ?
+		id="shoppingDao"인 <bean>객체에 있는 model.ShoppingDAO클래스를 참조(의존하여)하여 사용 하겠다는 뜻.
+	-->
+	
+	<!-- SujakCenter.jsp에서 이미지하나를 눌러 상세보기 요청이 들어오면... ShoppingController클래스를 실행되게 선언-->
+	<bean id="suinfo" name="/suinfo.do"  class="controller.ShoppingController"
+ 	p:shoppingDao-ref="shoppingDao"></bean>
+ 	
+ 	
+ 	<!-- SuJakInfo.jsp페이지(수작업공구 구매 페이지)에서...
+		"카트담기" 버튼을 눌러서... 카트담기 "sutoolcart.do" 호출이 들어왔을때......
+		ShoppingController서블릿 클래스가 실행되게 ...
+ 	 -->
+ 	 <bean id="sutoolcart" name="/sutoolcart.do"  class="controller.ShoppingController"
+ 	p:shoppingDao-ref="shoppingDao" /> 
+ 	
+ 	
+ 	<!-- SuCartResult.jsp페이지(카트내역 확인 페이지)에서...
+ 		"카트삭제" 버튼을 눌러서... 카트에 있는 상품을 삭제하는 요청! sucartdel.do호출이 들어 왔을때...
+ 		ShoppingController서블릿 클래스가 실행되게 ...
+ 	 -->
+ 	<bean id="sucartdel" name="/sucartdel.do"  class="controller.ShoppingController"
+ 	p:shoppingDao-ref="shoppingDao" /> 
+	
+	
+	
+	<!-- Top.jsp페이지에서....
+		"회원가입" 버튼을 눌러서... 회원가입페이지로 이동하는 요청!joinform.do호출이 들어 왔을때....
+		ShoppingController서블릿 클래스가 실행되게 ...
+	 -->
+	<bean id="joinform" name="/joinform.do"  class="controller.ShoppingController"
+ 	p:shoppingDao-ref="shoppingDao" /> 
+ 	
+ 	
+ 	<!-- joinFrom.jsp페이지에서...
+ 		회원가입 내용을 작성후! "회원가입"버튼을 눌렀을때..joinproc.do호출이 들어 왔을떄...
+ 		ShoppingController서블릿 클래스가 실행되게 ...
+ 		 -->
+ 	<bean id="joinproc" name="/joinproc.do"  class="controller.ShoppingController"
+ 	p:shoppingDao-ref="shoppingDao" /> 
+ 	
+ 	
+	<!-- Top.jsp페이지에서....
+		"로그인" 버튼을 눌러서... 로그인 페이지로 이동하는 요청! login.do호출이 들어 왔을때....
+		ShoppingController서블릿 클래스가 실행되게 ...
+	 -->
+ 	<bean id="login" name="/login.do"  class="controller.ShoppingController"
+ 	p:shoppingDao-ref="shoppingDao" />
+ 	
+ 	
+ 	<!-- LoginForm.jsp페이지에서.... 사용자가 아이디와 패스워드 입력후!!
+		"로그인" 버튼을 눌러서... DB에 있는 아이디,패스워드와 비교하여..
+		로그인하라라는  요청! loginproc.do호출이 들어 왔을때....
+		ShoppingController서블릿 클래스가 실행되게 ...
+	 -->
+ 	<bean id="loginproc" name="/Loginproc.do"  class="controller.ShoppingController"
+ 	p:shoppingDao-ref="shoppingDao" /> 
+ 	
+ 	
+ 	<!-- LoginForm.jsp페이지에서.... 사용자가 "로그아웃"버튼을 눌렀을때... 
+ 	     (logout.do라는 로그아웃 요청을 받았을떄..) ShoppingController서블릿 클래스가 실행되게 ...-->
+ 	<bean id="logout" name="/logout.do"  class="controller.ShoppingController"/>
+ 	
+ 	<!-- SuJakInfo.jsp페이지에서 사용자가 카트에 담지 않은 수작업공구 상품을 "결제하기"버튼을 눌렀을때..
+ 		("sutoolbuy.do"라는 결제 요청을 받았을때..) ShoppingController서블릿 클래스가 실행되게
+ 	 -->
+ 	<bean id="sutoolbuy" name="/sutoolbuy.do"  class="controller.ShoppingController"
+ 	p:shoppingDao-ref="shoppingDao" />
+ 	
+ 	<!-- SuCartResult.jsp페이지에서 사용자가 카트에 담은 수작업공구 상품을 "결제하기"버튼을 눌렀을때..
+ 		("sucartbuy.do"라는 결제 요청을 받았을때..) ShoppingController서블릿 클래스가 실행되게
+ 	 -->
+ 	<bean id="sucartbuy" name="/sucartbuy.do"  class="controller.ShoppingController"
+ 	p:shoppingDao-ref="shoppingDao" /> 
+ 	
+ 	
+ 	<!-- SuCartBuy.jsp페이지에서 "계산완료하기" 버튼누르면..
+		결제가 진행되어 카트에 있는 상품 모두 지우기 요청을 받았을떄..ShoppingController서블릿 클래스가 실행되게
+ 	 -->
+ 	<bean id="cartalldel" name="/cartalldel.do"  class="controller.ShoppingController" /> 
+ 	
+ 	
+ 	<!-- Top.jsp에서.. 회사소개 메뉴를 클릭했을때...
+ 		("stanlyinfo.do" 라는 요청이 들어 왔을때..)
+ 		ShoppingController 가 실행 되게.
+ 	 -->
+ 	<bean id="stanlyinfo" name="/stanlyinfo.do"  class="controller.ShoppingController" />
+ 	
+ 	
+ 	<!-- Top.jsp에서.. 공구사용법 메뉴를 클릭했을때...
+ 		("tooluse.do" 라는 요청이 들어 왔을때..)
+ 		ShoppingController 가 실행 되게.
+ 	 -->
+ 	<bean id="tooluse" name="/tooluse.do"  class="controller.ShoppingController" /> 
+ 	
+ 	
+ 	<!-- Top.jsp에서.. 다운로드 메뉴를 클릭했을때...
+ 		("download.do" 라는 요청이 들어 왔을때..)
+ 		ShoppingController 가 실행 되게 하여  download할 뷰페이지가 보이게 하기
+ 	 -->
+ 	<bean id="download" name="/download.do"  class="controller.ShoppingController"/>
+ 	 	
+ 	 	
+ 	 <!-- DownCenter.jsp에서.. 다운로드 버튼을 클릭했을때...
+ 		("downfile.do" 라는 요청이 들어 왔을때..)
+ 		ShoppingController 가 실행 되게..
+ 	 -->	
+	<bean id="downfile" name="/downfile.do"  class="controller.ShoppingController"/> 
+ 	
+ 	<!-- Top.jsp에서.. 고객센터 게시판 메뉴를 클릭했을때...
+ 		("board.do" 라는 요청이 들어 왔을때..)
+ 		ShoppingController 가 실행 되게 하여 뷰페이지가 보이게 하기
+ 	 -->
+ 	<bean id="board" name="/board.do"  class="controller.ShoppingController"
+ 	p:shoppingDao-ref="shoppingDao" /> 
+ 	
+ 	
+ 	<bean id="boardwrite" name="/boardwrite.do"  class="controller.ShoppingController" />  
+
+	<bean id="boardwriteproc" name="/boardwriteproc.do"  class="controller.ShoppingController"
+ 	p:shoppingDao-ref="shoppingDao" /> 	
+	
+	<bean id="boardinfo" name="/boardinfo.do"  class="controller.ShoppingController"
+ 	p:shoppingDao-ref="shoppingDao" /> 	 	
+
+	<bean id="boardrewrite" name="/boardrewrite.do"  class="controller.ShoppingController"
+ 	/>
+	
+	<bean id="boardrewriteproc" name="/boardrewriteproc.do"  class="controller.ShoppingController"
+ 	p:shoppingDao-ref="shoppingDao" /> 	 	
+	
+	<bean id="boardupdate" name="/boardupdate.do"  class="controller.ShoppingController"/>
+
+	<bean id="boardupdateproc" name="/boardupdateproc.do"  class="controller.ShoppingController"
+ 	p:shoppingDao-ref="shoppingDao" /> 	
+
+	<bean id="boarddelete" name="/boarddelete.do"  class="controller.ShoppingController"/> 	
+
+	<bean id="boarddeleteproc" name="/boarddeleteproc.do"  class="controller.ShoppingController"
+ 	p:shoppingDao-ref="shoppingDao" /> 	
+ 	
+ 	
+ 	
+	
+	<!--Controller로부터 응답결과를 보여줄  jsp호출하는 방법에 대한 객체 생성 -->
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">	 
+		
+		<!--jsp에서 jstl을 사용하기 위해 설정 -->
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+	
+		<!-- .jsp페이지로 가기전에 한글처리 -->
+		<property name="contentType" value="text/html; charset=euc-kr"></property>
+	
+		<!-- jsp파일을 호출할때..확장자명 .jsp를 붙여서 호출 하겠다 는 뜻 -->
+		<property name="suffix" value=".jsp"/>
+		
+	
+	</bean>
+
+<!-- 오라클 데이터베이스 사용(연결)하는 클래스 등록 -->
+<bean id="shoppingDao" class="model.ShoppingDAO" p:dataSource-ref="dataSource"/>
+<!-- p:dataSource-ref="dataSource" 뜻 : 아래의 id="dataSource"의 <bean>객체를 참조(의존하여)하여 쓰겟다는 뜻 -->
+<!-- 
+	전체 설명 :
+	오라클 데이터 베이스 연결정보가 저장되어 있는 아래의 <bean id="dataSource"> 객체의 DriverManagerDataSource클래스를
+	누가?? model.ShoppingDAO클래스가~ new ShoppingDAO() 객체를 생성해서 가져다가 사용하지 않고 바로 가져다 사용하기위해..
+	아래의 id=:dataSource"인 <bean>객체를 참조(의존)하여 쓰겟다라고 등록한 것
+ -->
+ <!-- 데이터 베이스 설정하기(오라클용 데이터베이스) 시작-->
+ <bean id="dataSource"
+ 	class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+ 	
+ 	<!-- DriverManagerDataSource(커넥션 풀)클래스에 xml형태로 멤버변수들에 각각 DB연결정보를 저장 -->
+ 	<property name="driverClassName">
+ 		<value>com.mysql.jdbc.Driver</value>
+ 	</property>
+ 	<property name="url">
+ 		<value>jdbc:mysql://localhost:3306/jspbeginner</value>
+ 	</property>
+ 	<property name="username">
+ 		<value>jspid</value>
+ 	</property>
+ 	<property name="password">
+ 		<value>jsppass</value>
+ 	</property>
+ 	
+ 	</bean>
+ 	
+ 	<!-- 스프링에서
+ 	BeanNameViewResolver : 뷰이름과 View 객체간의 매핑 정보를 저장하기 위해 자원 파일을 사용한다.
+ 	BeanNameViewResolver는 주로 커스텀 뷰로 사용하며
+ 	컨트롤러에서 리턴 받은 뷰의 이름과 빈에 등록되어 있는 id의 값이 같은것을 찾아 실행 시킨다. -->
+ 	
+ 	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+ 		<property name="order">
+ 			<value>0</value>
+ 		</property>
+ 	</bean>
+ 	<bean id="downloadView" class="controller.DownloadView"/>
+
+</beans>
